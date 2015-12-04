@@ -1,0 +1,27 @@
+{
+	"name": "goleki",
+	"homepage": "https://github.com/antoniputra/goleki",
+	"authors": [
+		"antoniputra <akiddcode@gmail.com>"
+	],
+	"description": "Search with autocomplete made easy.",
+	"main": ["dist/goleki.js, dist/goleki.css"],
+	"keywords": [
+		"jquery",
+		"search",
+		"autocomplete",
+		"javascript"
+	],
+	"license": "MIT",
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"test",
+		"tests",
+		"index.html"
+	],
+	"dependencies": {
+        "jquery": ">=1.7"
+    }
+}
