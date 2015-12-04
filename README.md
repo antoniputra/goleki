@@ -5,42 +5,4 @@ A simple jQuery plugin for autocomplete.
 ### Demo
 https://antoniputra.github.io/goleki
 
-### How
-
-1. Link the goleki.js and goleki.css files to your site or application.
-
-  ```html
-  <link href="css/goleki.css" rel="stylesheet">
-  <script src="js/goleki.js"></script>
-  ```
-
-2. goleki.js is dependent on [transition.js file](https://raw.github.com/twbs/bootstrap/master/js/transition.js) from Bootstrap, so make sure to include that as well.
-
-  ```html
-  <script src="js/transition.js"></script>
-  ```
-
-3. Add a `data-action="zoom"` attribute to the images you want to make zoomable. For example:
-
-  ```html
-  <img src="img/blog_post_featured.png" data-action="zoom">
-  ```
-
-
-### Why
-
-It's the best way to zoom an image. It transitions/zooms in really smoothly, and then when you're done, scrolls away, [esc] keys away, clicks away… clean af.
-
-If you hold your meta key (`⌘` on mac) or (`ctrl` on windows), it will open in a new tab. wow.
-
-ps. use a `data-original` attr to link to a separate image. Just for meta-clicking tho.
-
-
-### Where
-
-goleki.js should work in all modern browsers (I think). If not, create an issue! Thanks!
-
-
-### Who
-
-Written with love by <a href="//twitter.com/antoni_putra12">@antoni_putra12</a>, made better by you.
+Written with love by <a href="https://twitter.com/antoni_putra12" target="_blank">Antoni Putra</a>, made better by you.
