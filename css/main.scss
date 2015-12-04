@@ -1,0 +1,188 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+@charset "utf-8";
+
+
+.b {
+	background: red;
+	color: #fff;
+}
+
+body {
+	position: relative;
+}
+
+footer {
+	margin-top: 30px;
+	padding: 50px 0px;
+	background: lighten(#2a2730, 7);
+	color: whitesmoke;
+
+	a {
+		color: lighten(#337ab7, 20);
+	}
+}
+
+.bs-example {
+	position: relative;
+    padding: 60px 15px 40px;
+    margin-bottom: 0px;
+    border-color: #e5e5e5 #eee #eee;
+    border-style: solid;
+    border-width: 1px 0;
+    border-bottom: 0px;
+    -webkit-box-shadow: inset 0 3px 6px rgba(0,0,0,.05);
+    box-shadow: inset 0 3px 6px rgba(0,0,0,.05);
+    margin-right: 0;
+    margin-left: 0;
+    background-color: #fff;
+    border-color: #ddd;
+    border-width: 1px;
+    border-radius: 4px 4px 0 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+
+    &:after {
+    	position: absolute;
+    	top: 15px;
+    	left: 15px;
+    	font-size: 12px;
+    	font-weight: 700;
+    	color: #959595;
+    	text-transform: uppercase;
+    	letter-spacing: 1px;
+    	content: "Example";
+    }
+}
+
+
+$header_base_color: #e2e1e7;
+header {
+	padding: 60px 0px;
+	background-image: linear-gradient(135deg,#2980b9,#133259 40%,#133259);
+	color: $header_base_color;
+	// border-style: solid;
+	// border-top-width: 4px;
+	// border-color: #2980B9;
+	margin-bottom: 40px;
+
+	.my-navbar {
+		background-color: transparent;
+		border-color: transparent;
+
+		ul.navbar-nav {
+			li {
+				a {
+					color: lighten($header_base_color, 2);
+				}
+			}
+			li.dropdown {
+				ul.dropdown-menu {
+					li a {
+						color: darken($header_base_color, 50);
+					}
+				}
+			}
+		}
+	}
+}
+
+
+.wrapper {
+	section {
+		margin-bottom: 75px;
+	}
+
+	.page-header {
+		> h1, h2 {
+			position: relative;
+
+			a {
+				position: absolute;
+				left: -50px;
+			}
+		}
+	}
+
+	$panel-hover: darken(#fff, 3);
+	.side-right {
+		width: 262px;
+
+		.nav {
+			position: relative;
+
+			li {
+				padding: 0px;
+				border: 1px solid #ddd;
+			    margin-bottom: -1px;
+
+				&:first-child {
+					border-top-left-radius: 4px;
+					border-top-right-radius: 4px;
+				}
+
+				&:last-child {
+					margin-bottom: 0;
+					border-bottom-right-radius: 4px;
+					border-bottom-left-radius: 4px;
+				}
+
+				&.active {
+					background: $panel-hover;
+					border-color: #ddd;
+					text-shadow: none;
+
+					&:before {
+						position: absolute;
+						top: 0;
+						left: 0;
+						bottom: 0;
+						width: 2px;
+						z-index: 9;
+						content: "";
+						background-color: #d26911;
+					}
+
+				}
+
+				a {
+					display: block;
+					padding: 10px 15px;
+
+					&:hover {
+						background-color: $panel-hover;
+						text-decoration: none;
+					}
+				}
+			}
+		}
+	}
+
+	.affix {
+		position: fixed;
+		top: 20px;
+
+		.side-right {
+			width: 262px;
+		}
+	}
+}
+
+
+
+@media (min-width: 768px) {
+	header h1 {
+    	font-size: 100px;
+	}
+	header .lead {
+		font-size: 30px;
+	}
+}
+
+
+
+// Import partials from `sass_dir` (defaults to `_sass`)
+@import
+        "syntax-highlighting"
+;

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+  {% include head.html %}
+
+  <body id="top" data-spy="scroll" data-target="#side-right">
+
+    {% include header.html %}
+
+    <div class="container wrapper">
+		<div class="row">
+			<div class="col-md-9">
+        		{{ content }}
+    		</div>
+    		<div class="col-md-3">
+    			{% include side_left.html %}
+			</div>
+		</div>
+	</div>
+
+    {% include footer.html %}
+
+  </body>
+
+</html>

@@ -1,0 +1,255 @@
+---
+layout: default
+---
+
+<section>
+	<div class="page-header">
+		<h2 id="overview">
+			<a href="#overview"><i class="glyphicon glyphicon-link"></i></a>
+			Overview
+		</h2>
+	</div>
+	<div class="lead">
+		Goleki.js is tiny <a href="http://jquery.com/">jQuery</a> plugin that gives you flexibility to support input with autocomplete for searching local or remote data. Currently features that provide by this package is :
+		<p><br/></p>
+		<ul>
+			<li>Allow you to search remote data</li>
+			<li>Customize template</li>
+			<li>Support bootstrap</li>
+		</ul>
+	</div>
+
+	<p><br></p>
+
+	<a href="https://github.com/antoniputra/goleki/releases" class="btn btn-primary btn-lg">
+		<span class="glyphicon glyphicon-cloud-download"></span>
+		Download Goleki.js
+	</a>
+</section> <!-- /overview -->
+
+<section>
+	<div class="page-header">
+		<h2 id="installation">
+			<a href="#installation"><i class="glyphicon glyphicon-link"></i></a>
+			Installation
+		</h2>
+		<p>You can download manual or if you prefer using package manager you can too.</p>
+
+		<h3>Install with bower</h3>
+		{% highlight bash %}
+			bower install goleki --save
+		{% endhighlight %}
+
+		<h3>Install with npm</h3>
+		{% highlight bash %}
+			npm install goleki --save
+		{% endhighlight %}
+
+		<p><br/></p>
+		<p>Then just include the following lines of code before <code>&lt;/body&gt;</code> section of your HTML.</p>
+{% highlight html %}
+<script src="/path/to/jquery.js" type="text/javascript"></script>
+<script src="/path/to/goleki.js" type="text/javascript"></script>
+{% endhighlight %}
+		<p>That's it, you done! Now checkout example below.</p>
+	</div>
+</section> <!-- /installation -->
+
+<section>
+	<div class="page-header">
+		<h2 id="basic-usage">
+			<a href="#basic-usage"><i class="glyphicon glyphicon-link"></i></a>
+			Basic usage
+		</h2>
+	</div>
+
+	<div class="bs-example">
+		<input type="text" name="basic" class="form-control input-lg basic" placeholder="Search repositories of github...." />
+	</div>
+{% highlight js %}
+$('.basic').goleki({
+   source: 'https://api.github.com/search/repositories',
+   jsonData: 'items',
+   templates: {
+      item: function(obj) {
+         return '<a href="'+ obj.html_url +'" style="color: green;">'+ obj.full_name +'</a>';
+      }
+   }
+});
+{% endhighlight %}
+</section> <!-- /basic-usage -->
+
+<section>
+	<div class="page-header">
+		<h2 id="custom-template">
+			<a href="#custom-template"><i class="glyphicon glyphicon-link"></i></a>
+			Custom template
+		</h2>
+	</div>
+
+	<div class="bs-example">
+		<input type="text" name="custom_template" class="form-control custom_template" placeholder="Search repositories of github...." />
+	</div>
+{% highlight js %}
+$('.custom_template').goleki({
+   source: 'https://api.github.com/search/repositories',
+   jsonData: 'items',
+   templates: {
+      loading: 'please waiting prend...',
+      empty: 'Unfortunately there is empty',
+      item: function(obj) {
+         return '<a href="'+ obj.html_url +'" data-result="'+ obj.full_name +'" class="media" style="margin:0px;">\n '+
+            '	<div class="media-left">\n '+
+            '		<img class="media-object" src="'+ obj.owner.avatar_url +'&s=48" style="width: 24px; height: 24px;">\n '+
+            '	</div>\n '+
+            '	<div class="media-body">\n '+
+            '		<h4 class="media-heading">'+ obj.full_name +'</h4>\n '+
+            '		<small>'+ obj.owner.login +'</small>\n '+
+            '	</div>\n '+
+            '</div>';
+      }
+   }
+});
+{% endhighlight %}
+
+</section> <!-- /custom-template -->
+
+<section>
+	<div class="page-header">
+		<h2 id="working-with-loading">
+			<a href="#loading"><i class="glyphicon glyphicon-link"></i></a>
+			Working with loading
+		</h2>
+	</div>
+
+	<div class="bs-example">
+		<div class="form-group has-feedback">
+			<input type="text" name="with_loading" class="form-control with_loading" />
+			<span class="form-control-feedback el-loading" aria-hidden="true">
+				<img src="/img/loading-git.gif" style="width: 16px; height: 16px;">
+			</span>
+		</div>
+	</div>
+{% highlight js %}
+$('.with_loading').goleki({
+   source: 'https://api.github.com/search/repositories',
+   jsonData: 'items',
+   templates: {
+      item: function(obj) {
+         return '<a href="'+ obj.html_url +'" style="color: green;">'+ obj.full_name +'</a>';
+      }
+   }
+});
+{% endhighlight %}
+</section> <!-- /loading -->
+
+
+<section>
+	<div class="page-header">
+		<h2 id="events">
+			<a href="#events"><i class="glyphicon glyphicon-link"></i></a>
+			Events
+		</h2>
+	</div>
+
+	<div class="bs-example">
+		<input type="text" name="event" class="form-control input-lg event-example" placeholder="Search repositories of github...." />
+	</div>
+{% highlight js %}
+$('.event-example').goleki({
+   source: 'https://api.github.com/search/repositories',
+   jsonData: 'items',
+   onSelectItem: function(e, self, $el, obj) {
+      e.preventDefault();
+      console.log(e, $el, obj);
+      alert(obj.full_name +' is owned by '+ obj.owner.login);
+   },
+   templates: {
+      item: function(obj) {
+         return '<a href="'+ obj.html_url +'" style="color: green;">'+ obj.full_name +'</a>';
+      }
+   }
+});
+{% endhighlight %}
+</section> <!-- /events -->
+
+<section>
+	<div class="page-header">
+		<h2 id="options">
+			<a href="#options"><i class="glyphicon glyphicon-link"></i></a>
+			Options
+		</h2>
+	</div>
+
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Type</th>
+				<th>Default</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>source</td>
+				<td><code>string|object</code></td>
+				<td>null</td>
+				<td>Your remote url, or local object</td>
+			</tr>
+			<tr>
+				<td>jsonData</td>
+				<td><code>string</code></td>
+				<td>null</td>
+				<td>
+					Generally api has key that contains result of data, for example take a look an <a href="https://api.github.com/search/repositories">api github</a>. The key for contains result data is <code>items</code>
+					<p><br/></p>
+					<p><i>if you doesn't need this, just leave empty</i></p>
+				</td>
+			</tr>
+			<tr>
+				<td>typeTimeout</td>
+				<td><code>integer</code></td>
+				<td><code>800</code></td>
+				<td>Delay request to api when user type in input.</td>
+			</tr>
+			<tr>
+				<td>onSelectItem</td>
+				<td><code>callback</code></td>
+				<td>null</td>
+				<td>Event when user select item from autocomplete.</td>
+			</tr>
+
+			<tr>
+				<td colspan="4">
+					<h4>Templates</h4>
+					<p>all below property should set inside <code>template</code> object</p>
+				</td>
+			</tr>
+			<tr>
+				<td>item</td>
+				<td><code>callback</code></td>
+				<td><code>&lt;a&gt;</code></td>
+				<td>Template for each item</td>
+			</tr>
+			<tr>
+				<td>loading</td>
+				<td><code>callback</code></td>
+				<td><code>string|object</code></td>
+				<td>Template for loading text</td>
+			</tr>
+			<tr>
+				<td>empty</td>
+				<td><code>callback</code></td>
+				<td><code>string</code></td>
+				<td>Template for empty text</td>
+			</tr>
+			<tr>
+				<td>fail</td>
+				<td><code>callback</code></td>
+				<td><code>string</code></td>
+				<td>Template for fail contact api</td>
+			</tr>
+		</tbody>
+	</table>
+</section> <!-- /options -->
