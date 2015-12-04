@@ -126,7 +126,7 @@ $('.custom_template').goleki({
 		<div class="form-group has-feedback">
 			<input type="text" name="with_loading" class="form-control with_loading" />
 			<span class="form-control-feedback el-loading" aria-hidden="true">
-				<img src="/img/loading-git.gif" style="width: 16px; height: 16px;">
+				<img src="{{ "/img/loading-git.gif" | prepend: site.baseurl }}" style="width: 16px; height: 16px;">
 			</span>
 		</div>
 	</div>
