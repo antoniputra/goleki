@@ -1,11 +1,12 @@
 {
 	"name": "goleki",
+	"version": "1.0.0",
 	"homepage": "https://github.com/antoniputra/goleki",
 	"authors": [
-		"antoniputra <akiddcode@gmail.com>"
+		"antoniputra <akiddcode@gmail.com> (http://antoniputra.github.io)"
 	],
 	"description": "Search with autocomplete made easy.",
-	"main": ["dist/goleki.js, dist/goleki.css"],
+	"main": ["dist/js/goleki.js, dist/js/goleki.min.js"],
 	"keywords": [
 		"jquery",
 		"search",
