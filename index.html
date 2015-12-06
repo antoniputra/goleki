@@ -58,6 +58,14 @@
 					<input type="text" name="event" class="form-control local_data" placeholder="Search repositories of github...." />
 				</div>
 			</section>
+
+
+			<section>
+				<div class="form-group">
+					<label>Custom Params</label>
+					<input type="text" name="event" class="form-control custom_params" placeholder="Search repositories of github...." />
+				</div>
+			</section>
 		</div>
 		<div class="col-md-3"></div>
 	</div>
@@ -150,9 +158,25 @@
 			'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
 			'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
 		];
-		var inputKetiga = $('.local_data').goleki({
+		var localData = $('.local_data').goleki({
 			source: localData,
 			templates: {}
+		});
+
+
+		var custom_params = $('.custom_params').goleki({
+			source: 'http://instasuite.dev/ajax/coba',
+			sourceParams: {
+				keyword: 'input_q',
+				page: 'input_page'
+			},
+			jsonData: 'data',
+			templates: {
+				empty: 'ya gak onok lo prend',
+				item: function(obj) {
+					return '<a style="color: grey;"><span>'+ obj.username +'</span></a>';
+				}
+			}
 		});
 
 	</script>

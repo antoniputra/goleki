@@ -42,7 +42,7 @@
 	        self.options = $.extend({}, self.defaults, options);
 	        self.options.templates = $.extend({}, self.defaults.templates, options.templates);
 
-	        self.items = undefined;
+	        self.items = {};
 	        self.itemsObj;
 
 	        // blacklist : ctrl, tab, home, end, page-up/down, and arrow.
@@ -75,7 +75,7 @@
     		// when input value is empty, and user press backspace.
     		// we will remove all latest items. and clear result container
     		if (input.value.length < 1 && e.which == 8) {
-    			self.items = undefined;
+    			self.items = {};
     			self.toggleContainerAutocomplete('none');
     			self.$autocompleteContent.html('');
     			self.hideLoading();
@@ -130,7 +130,7 @@
 		});
 
 		self.$element.on('focus', function(e) {
-			if (typeof self.items !== 'undefined') {
+			if (self.items.length > 0) {
 				self.toggleContainerAutocomplete('block');
 			}
 		});
@@ -145,14 +145,15 @@
     Goleki.prototype.setItems = function(results) {
     	var self = this,
     		itemTemplate = self.options.templates.item,
-    		items = self.options.jsonData ? results[self.options.jsonData] : results,
+    		items = self.options.jsonData
+    			? results[self.options.jsonData] || {}
+    			: results,
     		li = $('<li></li>');
 
 		self.itemsObj = items;
-
 		// if no data, we'll make "items" property undefined
 		if (items.length < 1) {
-			self.items = undefined;
+			self.items = {};
 		};
 
 		// render each element of item
@@ -196,12 +197,24 @@
 
     Goleki.prototype.fetch = function(keyword, page) {
     	var self = this,
+    		page = page || 1,
     		params;
 
-		params = self.options.sourceParams || {
-			q: keyword,
-			page: page || 1
-		};
+		if (self.options.sourceParams && typeof self.options.sourceParams === 'object') {
+			// replace first
+			var process = JSON.stringify(self.options.sourceParams)
+				.replace('input_q', keyword)
+				.replace('input_page', page);
+
+			params = JSON.parse(process);
+		}
+
+		else {
+			params = {
+				q: keyword,
+				page: page
+			};
+		}
 
     	return $.ajax({
     		url: self.options.source,
