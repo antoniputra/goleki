@@ -104,14 +104,15 @@
 					return ;
 				}
 
+				// search local source
 				if (typeof self.options.source === 'object') {
-					// search local source
 					self.fetchLocal(self.options.source, input.value, function(results) {
 						self.setItems(results);
 		    			self.renderDisplay();
 					});
 				}
 
+				// search remote source
 				else {
 					var request = self.fetch(input.value);
 
@@ -149,7 +150,7 @@
 
 		self.itemsObj = items;
 
-		// show no result text
+		// if no data, we'll make "items" property undefined
 		if (items.length < 1) {
 			self.items = undefined;
 		};
@@ -157,14 +158,15 @@
 		// render each element of item
     	self.items = $.map(items, function(obj, i) {
 
-    		// if user using function on item
+    		// if user using function
     		if (typeof itemTemplate === 'function') {
     			var item = $(itemTemplate(obj));
     		}
 
     		// if user using jquery object
+    		// comingsoon
     		else if(itemTemplate instanceof jQuery) {
-    			var item = $(itemTemplate(obj));
+    			var item = $(itemTemplate);
     		}
 
     		// using default
@@ -172,9 +174,7 @@
     			var item = $(itemTemplate).text(obj);
     		}
 
-    		item.addClass('goleki-item');
-    		item.attr('data-key', i);
-
+    		item.addClass('goleki-item').attr('data-goleki-key', i);
     		li.append(item);
     		return li[0];
     	});
@@ -198,7 +198,7 @@
     	var self = this,
     		params;
 
-		params = self.options.params || {
+		params = self.options.sourceParams || {
 			q: keyword,
 			page: page || 1
 		};
@@ -238,6 +238,7 @@
 
 		self.$element.attr('autocomplete', 'off');
 
+		// if user use "loading" property as object. we will hidden first.
 		if (typeof self.options.templates.loading === 'object') {
 			self.options.templates.loading.css({'display': 'none'});
 		}
@@ -247,7 +248,7 @@
 
 		$container.on('click', '.goleki-item', function(e) {
 			var $this = $(this),
-				obj = self.itemsObj[$this.data('key')];
+				obj = self.itemsObj[$this.data('goleki-key')];
 
 			if (typeof self.options.onSelectItem === 'function') {
 				return self.options.onSelectItem(e, self, self.$element, obj);
@@ -363,28 +364,27 @@
     }
 
     Goleki.prototype.empty = function() {
-    	var self = this;
+    	var self = this,
+    		theEmpty = self.options.templates.empty;
 
-    	if (typeof self.options.templates.empty === 'function') {
-    		return self.options.templates.empty(self.$element, self);
+    	if (typeof theEmpty === 'function') {
+    		var el = theEmpty(self.$element);
     	} else {
-    		return self.$autocompleteContent.html('<li><a>'+ self.options.templates.empty +'</a></li>');
+    		var el = '<a>'+ theEmpty +'</a>';
     	}
+		return self.$autocompleteContent.html('<li>'+ el +'</li>');
     }
 
     Goleki.prototype.fail = function() {
-    	var self = this;
+    	var self = this,
+    		theFail = self.options.templates.fail;
 
-    	if (typeof self.options.templates.fail === 'function') {
-    		return self.options.templates.fail(self.$element);
+    	if (typeof theFail === 'function') {
+    		var el = theFail(self.$element);
     	} else {
-    		self.$autocompleteContent.html('<li><a>'+ self.options.templates.fail +'</a></li>');
+    		var el = '<a>'+ theFail +'</a>';
     	}
-    }
-
-    Goleki.prototype.fail = function() {
-    	var self = this;
-    	self.$autocompleteContent.html('<li><a>'+ self.options.templates.fail +'</a></li>');
+    	return self.$autocompleteContent.html('<li>'+ el +'</li>');
     }
 
 
@@ -411,7 +411,7 @@
     // default options
     $.fn.goleki.options = {
     	source: null,
-    	params: null,
+    	sourceParams: null,
     	jsonData: false,
     	typeTimeout: 800,
 
