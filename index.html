@@ -143,7 +143,8 @@ $('.with_loading').goleki({
    templates: {
       item: function(obj) {
          return '<a style="color: green;">'+ obj.full_name +'</a>';
-      }
+      },
+      loading: $('.el-loading')
    }
 });
 {% endhighlight %}
