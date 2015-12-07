@@ -30,7 +30,7 @@
 		templates: {
 			loading: 'please waiting prend...',
 			empty: function(el) {
-				return '<a>Keyword ini "<b>'+ el.val() +'</b>" kosong. ga ada isinya</a>';
+				return '<a>There is no data for Keyword "<b>'+ el.val() +'</b>"</a>';
 			},
 			item: function(obj) {
 				return '<a href="'+ obj.html_url +'" data-result="'+ obj.full_name +'" class="media" style="margin:0px;">\n '+
