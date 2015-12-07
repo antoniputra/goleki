@@ -92,25 +92,28 @@ $('.basic').goleki({
 	</div>
 {% highlight js %}
 $('.custom_template').goleki({
-   source: 'https://api.github.com/search/repositories',
-   jsonData: 'items',
-   templates: {
-      loading: 'please waiting prend...',
-      empty: function(el, self) {
-         self.$autocompleteContent.html('<li><a>There is no data for keyword : <b>'+ el.val() +'</b></a></li>')
-      },
-      item: function(obj) {
-         return '<a href="'+ obj.html_url +'" data-result="'+ obj.full_name +'" class="media" style="margin:0px;">\n '+
-            '	<div class="media-left">\n '+
-            '		<img class="media-object" src="'+ obj.owner.avatar_url +'&s=48" style="width: 24px; height: 24px;">\n '+
-            '	</div>\n '+
-            '	<div class="media-body">\n '+
-            '		<h4 class="media-heading">'+ obj.full_name +'</h4>\n '+
-            '		<small>'+ obj.owner.login +'</small>\n '+
-            '	</div>\n '+
-            '</div>';
-      }
-   }
+  source: 'https://api.github.com/search/repositories',
+  jsonData: 'items',
+  templates: {
+    loading: 'please waiting prend...',
+    empty: function(el) {
+      return '<a>Keyword ini "<b>'+ el.val() +'</b>" kosong. ga ada isinya</a>';
+    },
+    item: function(obj) {
+      return '<a href="'+ obj.html_url +'" data-result="'+ obj.full_name +'" class="media" style="margin:0px;">\n '+
+      ' <div class="media-left">\n '+
+      '   <img class="media-object" src="'+ obj.owner.avatar_url +'&s=48" style="width: 24px; height: 24px;">\n '+
+      ' </div>\n '+
+      ' <div class="media-body">\n '+
+      '   <h4 class="media-heading">'+ obj.full_name +'</h4>\n '+
+      '   <small>'+ obj.owner.login +'</small>\n '+
+      ' </div>\n '+
+      '</div>';
+    },
+    fail: function(el) {
+      return '<a>Sorry there is no data for keyword : "<b>'+ el.val() +'</b>"</a>';
+    }
+  }
 });
 {% endhighlight %}
 
@@ -138,12 +141,33 @@ $('.with_loading').goleki({
    jsonData: 'items',
    templates: {
       item: function(obj) {
-         return '<a href="'+ obj.html_url +'" style="color: green;">'+ obj.full_name +'</a>';
+         return '<a style="color: green;">'+ obj.full_name +'</a>';
       }
    }
 });
 {% endhighlight %}
 </section> <!-- /loading -->
+
+<section>
+	<div class="page-header">
+		<h2 id="working-with-loading">
+			<a href="#loading"><i class="glyphicon glyphicon-link"></i></a>
+			Local Data
+		</h2>
+	</div>
+
+	<div class="bs-example">
+		<input type="text" name="basic" class="form-control input-lg local_data" placeholder="Search city in java indonesia.." />
+	</div>
+{% highlight js %}
+var localData = [
+'Bandung', 'Batu', 'Bekasi', 'Blitar', 'Bogor', 'Cianjur', 'Cilegon', 'Cimahi', 'Cirebon', 'Depok', 'Jakarta', 'Madiun', 'Magelang', 'Malang', 'Mojokerto', 'Pasuruan', 'Pekalongan', 'Probolinggo', 'Salatiga', 'Semarang', 'South Tangerang', 'Sukabumi', 'Surabaya', 'Surakarta', 'Tasikmalaya', 'Tangerang', 'Tegal', 'Yogyakarta', 'Kediri', 'Serang', 'Purwokerto',
+];
+var localData = $('.local_data').goleki({
+  source: localData
+});
+{% endhighlight %}
+</section> <!-- /local_data -->
 
 
 <section>
@@ -159,18 +183,17 @@ $('.with_loading').goleki({
 	</div>
 {% highlight js %}
 $('.event-example').goleki({
-   source: 'https://api.github.com/search/repositories',
-   jsonData: 'items',
-   onSelectItem: function(e, instance, $el, obj) {
-      e.preventDefault();
-      console.log(e, instance, $el, obj);
-      alert(obj.full_name +' is owned by '+ obj.owner.login);
-   },
-   templates: {
-      item: function(obj) {
-         return '<a href="'+ obj.html_url +'" style="color: green;">'+ obj.full_name +'</a>';
-      }
-   }
+  source: 'https://api.github.com/search/repositories',
+  jsonData: 'items',
+  onSelectItem: function(e, self, $el, obj) {
+    e.preventDefault();
+    alert(obj.full_name +' is owned by '+ obj.owner.login);
+  },
+  templates: {
+    item: function(obj) {
+      return '<a href="'+ obj.html_url +'">'+ obj.full_name +'</a>';
+    }
+  }
 });
 {% endhighlight %}
 </section> <!-- /events -->
@@ -198,6 +221,26 @@ $('.event-example').goleki({
 				<td><code>string|object</code></td>
 				<td>null</td>
 				<td>Your remote url, or local object</td>
+			</tr>
+			<tr>
+				<td>sourceParams</td>
+				<td><code>object</code></td>
+				<td>null</td>
+				<td>
+					<p>
+						When you want to custom parameters, you need to tell <b>goleki</b> using <code>input_q</code>
+						<br>
+						This is example using custom parameters.
+					</p>
+					{% highlight js %}
+$('.custom_params').goleki({
+  source: 'http://awesomedomain.dev/ajax/jiff',
+  sourceParams: {
+    keyword: 'input_q'
+  }
+});
+					{% endhighlight %}
+				</td>
 			</tr>
 			<tr>
 				<td>jsonData</td>

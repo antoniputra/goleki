@@ -29,9 +29,8 @@
 		jsonData: 'items',
 		templates: {
 			loading: 'please waiting prend...',
-			// empty: 'Unfortunately there is no data',
-			empty: function(el, self) {
-				self.$autocompleteContent.html('<li><a>There is no data for keyword : <b>'+ el.val() +'</b></a></li>')
+			empty: function(el) {
+				return '<a>Keyword ini "<b>'+ el.val() +'</b>" kosong. ga ada isinya</a>';
 			},
 			item: function(obj) {
 				return '<a href="'+ obj.html_url +'" data-result="'+ obj.full_name +'" class="media" style="margin:0px;">\n '+
@@ -43,6 +42,9 @@
 					'		<small>'+ obj.owner.login +'</small>\n '+
 					'	</div>\n '+
 					'</div>';
+			},
+			fail: function(el) {
+				return '<a href="">Sorry there is no data for keyword : "<b>'+ el.val() +'</b>"</a>';
 			}
 		}
 	});
@@ -58,12 +60,19 @@
 		}
 	});
 
+	var localData = [
+		'Bandung', 'Batu', 'Bekasi', 'Blitar', 'Bogor', 'Cianjur', 'Cilegon', 'Cimahi', 'Cirebon', 'Depok', 'Jakarta', 'Madiun', 'Magelang', 'Malang', 'Mojokerto', 'Pasuruan', 'Pekalongan', 'Probolinggo', 'Salatiga', 'Semarang', 'South Tangerang', 'Sukabumi', 'Surabaya', 'Surakarta', 'Tasikmalaya', 'Tangerang', 'Tegal', 'Yogyakarta', 'Kediri', 'Serang', 'Purwokerto',
+		];
+		var localData = $('.local_data').goleki({
+			source: localData,
+			templates: {}
+		});
+
 	$('.event-example').goleki({
 		source: 'https://api.github.com/search/repositories',
 		jsonData: 'items',
 		onSelectItem: function(e, self, $el, obj) {
 			e.preventDefault();
-			console.log(e, $el, obj);
 			alert(obj.full_name +' is owned by '+ obj.owner.login);
 		},
 		templates: {
