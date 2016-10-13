@@ -1,6 +1,6 @@
 {
   "name": "goleki",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "author": "Antoni Putra <akiddcode@gmail.com> (http://antoniputra.github.io)",
   "description": "Search with autocomplete be easy.",
   "main": "goleki.js",

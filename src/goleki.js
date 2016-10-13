@@ -351,7 +351,7 @@
     	var self = this;
 
     	if (typeof self.options.templates.empty === 'function') {
-    		return self.options.templates.empty(self.$element, self);
+    		return self.$autocompleteContent.html('<li>'+ self.options.templates.empty(self.$element, self) +'</li>');
     	} else {
     		return self.$autocompleteContent.html('<li><a>'+ self.options.templates.empty +'</a></li>');
     	}
@@ -361,15 +361,10 @@
     	var self = this;
 
     	if (typeof self.options.templates.fail === 'function') {
-    		return self.options.templates.fail(self.$element);
+    		return self.$autocompleteContent.html('<li>'+ self.options.templates.fail(self.$element) +'</li>');
     	} else {
     		self.$autocompleteContent.html('<li><a>'+ self.options.templates.fail +'</a></li>');
     	}
-    }
-
-    Goleki.prototype.fail = function() {
-    	var self = this;
-    	self.$autocompleteContent.html('<li><a>'+ self.options.templates.fail +'</a></li>');
     }
 
 
